@@ -1,0 +1,261 @@
+CREATE TABLE USUARIO_MEDICO (
+	ID_MEDICO 					 NUMBER(3) NOT NULL,
+    NM_MEDICO                    VARCHAR2(100) NOT NULL,
+    TIPO_ESPECIALIDADE           VARCHAR2(50) NOT NULL,
+    CRM                          VARCHAR2(20) NOT NULL,
+    NR_CPF                       VARCHAR2(11) NOT NULL,
+    DT_NASCIMENTO                DATE,
+    SEXO                         CHAR(1),
+    NM_ENDERECO                  VARCHAR2(255) NOT NULL,
+    NR_TELEFONE                  VARCHAR2(20) NOT NULL,
+    NM_EMAIL                     VARCHAR2(100) NOT NULL,
+	PASSWORD            		 VARCHAR2(50) NOT NULL,
+    USUARIO_PACIENTE_ID_PACIENTE INTEGER NOT NULL
+);
+
+COMMENT ON COLUMN USUARIO_MEDICO.ID_MEDICO IS
+    'é o id de um medico.';
+	
+COMMENT ON COLUMN USUARIO_MEDICO.NM_MEDICO IS
+    'é o nome de do medico.';
+	
+COMMENT ON COLUMN USUARIO_MEDICO.TIPO_ESPECIALIDADE IS
+    'são as especialidades do medico.';
+	
+COMMENT ON COLUMN USUARIO_MEDICO.CRM IS
+    'é o número do CRM do medico.';
+	
+COMMENT ON COLUMN USUARIO_MEDICO.NR_CPF IS
+    'é o numero do CPF do medico.';
+	
+COMMENT ON COLUMN USUARIO_MEDICO.DT_NASCIMENTO IS
+    'é a data de nascimento do medico.';
+
+COMMENT ON COLUMN USUARIO_MEDICO.SEXO IS
+    'é o sexo do medico.';
+	
+COMMENT ON COLUMN USUARIO_MEDICO.NM_ENDERECO IS
+    'é o nome da rua do medico.';
+	
+COMMENT ON COLUMN USUARIO_MEDICO.NR_TELEFONE IS
+    'é o numero de telefone do medico.';
+	
+COMMENT ON COLUMN USUARIO_MEDICO.NM_EMAIL IS
+    'é o email do medico.';
+	
+COMMENT ON COLUMN USUARIO_MEDICO.PASSWORD IS
+    'é a senha para login do medico.';
+
+ALTER TABLE USUARIO_MEDICO ADD CONSTRAINT PK_USUARIO_MEDICO PRIMARY KEY ( ID_MEDICO );
+
+
+CREATE TABLE AGENDA_PACIENTE (
+    ID_AGENDA INTEGER NOT NULL,
+    NM_REMEDIO VARCHAR2(100) NOT NULL,
+    DESCRICAO_REMEDIO VARCHAR2(255) NOT NULL,
+    DT_INICIO DATE NOT NULL,
+    DT_TERMINO DATE,
+    USUARIO_PACIENTE_ID_PACIENTE INTEGER NOT NULL,
+    CONSTRAINT AGENDA_PACIENTE_PK PRIMARY KEY (ID_AGENDA),
+    CONSTRAINT FK_AGENDA_PACIENTE FOREIGN KEY (USUARIO_PACIENTE_ID_PACIENTE) REFERENCES USUARIO_PACIENTE(ID_PACIENTE)
+);
+
+COMMENT ON TABLE AGENDA_PACIENTE IS
+    'Tabela para armazenar as agendas dos pacientes.';
+
+COMMENT ON COLUMN AGENDA_PACIENTE.ID_AGENDA IS
+    'É o identificador único da agenda do paciente.';
+
+COMMENT ON COLUMN AGENDA_PACIENTE.NM_REMEDIO IS
+    'É o nome do remédio na agenda do paciente.';
+
+COMMENT ON COLUMN AGENDA_PACIENTE.DESCRICAO_REMEDIO IS
+    'É a descrição do remédio na agenda do paciente.';
+
+COMMENT ON COLUMN AGENDA_PACIENTE.DT_INICIO IS
+    'É a data de início da prescrição do remédio.';
+
+COMMENT ON COLUMN AGENDA_PACIENTE.DT_TERMINO IS
+    'É a data de término da prescrição do remédio.';
+
+COMMENT ON COLUMN AGENDA_PACIENTE.USUARIO_PACIENTE_ID_PACIENTE IS
+    'É o identificador do paciente associado à agenda.';
+
+
+CREATE TABLE CONTATOS_EMERGENCIA (
+    ID_CONTATOS INTEGER NOT NULL,
+    NM_NOME VARCHAR2(255) NOT NULL,
+    PARENTESCO VARCHAR2(255) NOT NULL,
+    NR_CPF VARCHAR2(11) NOT NULL,
+    DT_NASCIMENTO DATE,
+    SEXO CHAR(1),
+    NM_ENDERECO VARCHAR2(255),
+    NR_TELEFONE VARCHAR2(20) NOT NULL,
+    NM_EMAIL VARCHAR2(100) NOT NULL,
+    USUARIO_PACIENTE_ID_PACIENTE INTEGER NOT NULL,
+    CONSTRAINT CONTATOS_EMERGENCIA_PK PRIMARY KEY (ID_CONTATOS),
+    CONSTRAINT FK_CONTATOS_EMERGENCIA FOREIGN KEY (USUARIO_PACIENTE_ID_PACIENTE) REFERENCES USUARIO_PACIENTE(ID_PACIENTE)
+);
+
+COMMENT ON TABLE CONTATOS_EMERGENCIA IS
+    'Tabela para armazenar os contatos de emergência dos pacientes.';
+
+COMMENT ON COLUMN CONTATOS_EMERGENCIA.ID_CONTATOS IS
+    'É o identificador único do contato de emergência.';
+
+COMMENT ON COLUMN CONTATOS_EMERGENCIA.NM_NOME IS
+    'É o nome do contato de emergência.';
+
+COMMENT ON COLUMN CONTATOS_EMERGENCIA.PARENTESCO IS
+    'É o parentesco do contato de emergência com o paciente.';
+
+COMMENT ON COLUMN CONTATOS_EMERGENCIA.NR_CPF IS
+    'É o número do CPF do contato de emergência.';
+
+COMMENT ON COLUMN CONTATOS_EMERGENCIA.DT_NASCIMENTO IS
+    'É a data de nascimento do contato de emergência.';
+
+COMMENT ON COLUMN CONTATOS_EMERGENCIA.SEXO IS
+    'É o sexo do contato de emergência.';
+
+COMMENT ON COLUMN CONTATOS_EMERGENCIA.NM_ENDERECO IS
+    'É o endereço do contato de emergência.';
+
+COMMENT ON COLUMN CONTATOS_EMERGENCIA.NR_TELEFONE IS
+    'É o número de telefone do contato de emergência.';
+
+COMMENT ON COLUMN CONTATOS_EMERGENCIA.NM_EMAIL IS
+    'É o e-mail do contato de emergência.';
+
+
+CREATE TABLE FICHA (
+    ID_FICHA INTEGER NOT NULL,
+    SINTOMAS_ATUAIS VARCHAR2(255) NOT NULL,
+    MEDICAMENTOS_USO VARCHAR2(255) NOT NULL,
+    ALERGIAS VARCHAR2(255) NOT NULL,
+    PESO NUMBER(5),
+    ALTURA NUMBER(5),
+    OBSERVACOES VARCHAR2(255),
+    USUARIO_PACIENTE_ID_PACIENTE INTEGER NOT NULL,
+    CONSTRAINT FICHA_PK PRIMARY KEY (ID_FICHA),
+    CONSTRAINT FK_FICHA_PACIENTE FOREIGN KEY (USUARIO_PACIENTE_ID_PACIENTE) REFERENCES USUARIO_PACIENTE(ID_PACIENTE)
+);
+
+COMMENT ON TABLE FICHA IS
+    'Tabela para armazenar as fichas médicas dos pacientes.';
+
+COMMENT ON COLUMN FICHA.ID_FICHA IS
+    'É o identificador único da ficha médica.';
+
+COMMENT ON COLUMN FICHA.SINTOMAS_ATUAIS IS
+    'São os sintomas atuais do paciente registrados na ficha médica.';
+
+COMMENT ON COLUMN FICHA.MEDICAMENTOS_USO IS
+    'São os medicamentos em uso pelo paciente registrados na ficha médica.';
+
+COMMENT ON COLUMN FICHA.ALERGIAS IS
+    'São as alergias do paciente registradas na ficha médica.';
+
+COMMENT ON COLUMN FICHA.PESO IS
+    'É o peso do paciente registrado na ficha médica.';
+
+COMMENT ON COLUMN FICHA.ALTURA IS
+    'É a altura do paciente registrada na ficha médica.';
+
+COMMENT ON COLUMN FICHA.OBSERVACOES IS
+    'São observações adicionais registradas na ficha médica do paciente.';
+
+
+CREATE TABLE PACIENTE_MEDICO (
+    ID NUMBER(3) NOT NULL,
+    USUARIO_PACIENTE_ID_PACIENTE INTEGER NOT NULL,
+    CONSTRAINT PACIENTE_MEDICO_RELATION_PK PRIMARY KEY (ID),
+    CONSTRAINT FK_PACIENTE_MEDICO_RELATION_PACIENTE FOREIGN KEY (USUARIO_PACIENTE_ID_PACIENTE) REFERENCES USUARIO_PACIENTE(ID_PACIENTE)
+);
+
+COMMENT ON TABLE PACIENTE_MEDICO_RELATION IS
+    'Tabela para representar a relação N para M entre médicos e pacientes.';
+
+COMMENT ON COLUMN PACIENTE_MEDICO_RELATION.ID IS
+    'É o identificador único da relação entre médicos e pacientes.';
+
+COMMENT ON COLUMN PACIENTE_MEDICO_RELATION.USUARIO_PACIENTE_ID_PACIENTE IS
+    'É o identificador do paciente associado à relação médico-paciente.';
+
+
+CREATE TABLE PLANO_SAUDE (
+    ID_PLANO INTEGER NOT NULL,
+    NM_PLANO VARCHAR2(255) NOT NULL,
+    TIPO_PLANO VARCHAR2(255) NOT NULL,
+    COBERTURA VARCHAR2(255) NOT NULL,
+    CARENCIA VARCHAR2(10),
+    USUARIO_PACIENTE_ID_PACIENTE INTEGER NOT NULL,
+    CONSTRAINT PLANO_SAUDE_PK PRIMARY KEY (ID_PLANO),
+    CONSTRAINT FK_PLANO_SAUDE_PACIENTE FOREIGN KEY (USUARIO_PACIENTE_ID_PACIENTE) REFERENCES USUARIO_PACIENTE(ID_PACIENTE)
+);
+
+COMMENT ON TABLE PLANO_SAUDE IS
+    'Tabela para armazenar informações sobre os planos de saúde dos pacientes.';
+
+COMMENT ON COLUMN PLANO_SAUDE.ID_PLANO IS
+    'É o identificador único do plano de saúde.';
+
+COMMENT ON COLUMN PLANO_SAUDE.NM_PLANO IS
+    'É o nome do plano de saúde.';
+
+COMMENT ON COLUMN PLANO_SAUDE.TIPO_PLANO IS
+    'É o tipo do plano de saúde.';
+
+COMMENT ON COLUMN PLANO_SAUDE.COBERTURA IS
+    'É a cobertura do plano de saúde.';
+
+COMMENT ON COLUMN PLANO_SAUDE.CARENCIA IS
+    'É o período de carência do plano de saúde.';
+
+
+CREATE TABLE USUARIO_PACIENTE (
+    ID_PACIENTE INTEGER NOT NULL,
+    NM_PACIENTE VARCHAR2(100) NOT NULL,
+    NM_DOENCAS_CRONICAS VARCHAR2(255) NOT NULL,
+    NR_CPF VARCHAR2(11) NOT NULL,
+    DT_NASCIMENTO DATE,
+    SEXO CHAR(1),
+    NM_ENDERECO VARCHAR2(255),
+    NR_TELEFONE VARCHAR2(20),
+    NN_EMAIL VARCHAR2(100) NOT NULL,
+    PASSWORD VARCHAR2(50) NOT NULL,
+    CONSTRAINT USUARIO_PACIENTE_PK PRIMARY KEY (ID_PACIENTE)
+);
+
+COMMENT ON TABLE USUARIO_PACIENTE IS
+    'Tabela para armazenar informações sobre os usuários pacientes.';
+
+COMMENT ON COLUMN USUARIO_PACIENTE.ID_PACIENTE IS
+    'É o identificador único do usuário paciente.';
+
+COMMENT ON COLUMN USUARIO_PACIENTE.NM_PACIENTE IS
+    'É o nome do paciente.';
+
+COMMENT ON COLUMN USUARIO_PACIENTE.NM_DOENCAS_CRONICAS IS
+    'São as doenças crônicas do paciente.';
+
+COMMENT ON COLUMN USUARIO_PACIENTE.NR_CPF IS
+    'É o número do CPF do paciente.';
+
+COMMENT ON COLUMN USUARIO_PACIENTE.DT_NASCIMENTO IS
+    'É a data de nascimento do paciente.';
+
+COMMENT ON COLUMN USUARIO_PACIENTE.SEXO IS
+    'É o sexo do paciente.';
+
+COMMENT ON COLUMN USUARIO_PACIENTE.NM_ENDERECO IS
+    'É o endereço do paciente.';
+
+COMMENT ON COLUMN USUARIO_PACIENTE.NR_TELEFONE IS
+    'É o número de telefone do paciente.';
+
+COMMENT ON COLUMN USUARIO_PACIENTE.NN_EMAIL IS
+    'É o e-mail do paciente.';
+
+COMMENT ON COLUMN USUARIO_PACIENTE.PASSWORD IS
+    'É a senha para login do paciente.';
