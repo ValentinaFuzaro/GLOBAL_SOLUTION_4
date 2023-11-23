@@ -5,6 +5,8 @@
 
 ## Descrição do projeto e seus objetivos
 
+O projeto propõe o desenvolvimento de um aplicativo inovador de saúde que utiliza dados de temperatura coletados por um sensor conectado a um dispositivo Arduino. Este aplicativo visa melhorar a eficiência no acompanhamento médico e no gerenciamento de pacientes. Ao integrar a tecnologia do sensor de temperatura, o sistema fornece informações valiosas para o médico, permitindo uma análise mais abrangente da condição de saúde do paciente. O objetivo principal do aplicativo é oferecer uma ferramenta abrangente para médicos gerenciarem as consultas e acompanharem o estado de saúde de seus pacientes de forma mais proativa.
+
 ## Prints da visão geral
 <h3>Print da visão geral do grupo de recursos</h3>
 <img src="./assets/Resource-Group.png" alt="Print da visão geral do grupo de recursos">
